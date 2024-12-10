@@ -6,9 +6,39 @@ RCT_EXTERN_METHOD(multiply:(float)a withB:(float)b
                  withResolver:(RCTPromiseResolveBlock)resolve
                  withRejecter:(RCTPromiseRejectBlock)reject)
 
+RCT_EXTERN_METHOD(initialize:(NSString *)publicKey)
+
+RCT_EXTERN_METHOD(createSingleUseToken:(NSDictionary *)cardDict 
+                  withAmount:(NSNumber *)amount
+                  shouldAuthenticate:(BOOL)shouldAuthenticate
+                  withOnBehalfOf:(NSString *)onBehalfOf
+                  withCurrency:(NSString *)currency
+                  withBillingDetails:(NSDictionary *)billingDetails
+                  withCustomer:(NSDictionary *)customer
+                  withResolver:(RCTPromiseResolveBlock)resolve
+                  withRejecter:(RCTPromiseRejectBlock)reject)
+
+RCT_EXTERN_METHOD(createMultipleUseToken:(NSDictionary *)cardDict 
+                  withOnBehalfOf:(NSString *)onBehalfOf
+                  withMidLabel:(NSString *)midLabel
+                  withBillingDetails:(NSDictionary *)billingDetails
+                  withCustomer:(NSDictionary *)customer
+                  withResolver:(RCTPromiseResolveBlock)resolve
+                  withRejecter:(RCTPromiseRejectBlock)reject)
+
+RCT_EXTERN_METHOD(createAuthentication:(NSString *)tokenId 
+                  withAmount:(NSNumber *)amount
+                  withCurrency:(NSString *)currency
+                  withCardCvn:(NSString *)cardCvn
+                  withOnBehalfOf:(NSString *)onBehalfOf
+                  withMidLabel:(NSString *)midLabel
+                  withCardHolder:(NSDictionary *)cardHolder
+                  withResolver:(RCTPromiseResolveBlock)resolve
+                  withRejecter:(RCTPromiseRejectBlock)reject)
+
 + (BOOL)requiresMainQueueSetup
 {
-  return NO;
+  return YES;
 }
 
 @end

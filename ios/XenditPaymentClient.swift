@@ -100,10 +100,7 @@ class XenditPaymentClient: NSObject {
     
     DispatchQueue.main.async {
 
-      if let _cardHolder = cardHolder {
-        self.mapToCardHolder(cardHolderDict: _cardHolder)
-      }
-
+      let _cardHolder = self.mapToCardHolder(cardHolderDict: cardHolder)
       let authenticationRequest = XenditAuthenticationRequest.init(tokenId: tokenId, amount: amount, currency: currency, cardData: _cardHolder)
 
       if let _midLabel = midLabel {

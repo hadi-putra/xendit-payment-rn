@@ -205,19 +205,23 @@ class XenditPaymentClient: NSObject {
     return customer
   }
 
-  private func mapToCardHolder(cardHolderDict: NSDictionary) -> XenditCardHolderInformation? {
-    if cardHolderDict.allKeys.isEmpty {
+  private func mapToCardHolder(cardHolderDict: NSDictionary?) -> XenditCardHolderInformation? {
+    if let _cardHolderDict = cardHolderDict {
+      if _cardHolderDict.allKeys.isEmpty {
+        return nil
+      }
+
+      let xenditCardHolder = XenditCardHolderInformation.init();
+
+      xenditCardHolder.cardHolderFirstName = _cardHolderDict["firstName"] as? String
+      xenditCardHolder.cardHolderLastName = _cardHolderDict["lastName"] as? String
+      xenditCardHolder.cardHolderEmail = _cardHolderDict["email"] as? String
+      xenditCardHolder.cardHolderPhoneNumber = _cardHolderDict["phoneNumber"] as? String
+
+      return xenditCardHolder;
+    } else {
       return nil
     }
-
-    let xenditCardHolder = XenditCardHolderInformation.init();
-
-    xenditCardHolder.cardHolderFirstName = cardHolderDict["firstName"] as? String
-    xenditCardHolder.cardHolderLastName = cardHolderDict["lastName"] as? String
-    xenditCardHolder.cardHolderEmail = cardHolderDict["email"] as? String
-    xenditCardHolder.cardHolderPhoneNumber = cardHolderDict["phoneNumber"] as? String
-
-    return xenditCardHolder;
   }
 
   private func tokenToMap(token: XenditCCToken) -> NSDictionary {
@@ -269,5 +273,7 @@ class XenditPaymentClient: NSObject {
       "failureReason":authentication.failureReason ?? NSNull(),
       "cardInfo":self.cardMetaDataToMap(cardMetaData: authentication.cardInfo) ?? NSNull()
     ]
+
+    return authDict
   }
 }

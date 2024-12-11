@@ -99,7 +99,12 @@ class XenditPaymentClient: NSObject {
                             reject: @escaping RCTPromiseRejectBlock) -> Void {
     
     DispatchQueue.main.async {
-      let authenticationRequest = XenditAuthenticationRequest.init(tokenId: tokenId, amount: amount, currency: currency)
+
+      if let _cardHolder = cardHolder {
+        self.mapToCardHolder(cardHolderDict: _cardHolder)
+      }
+
+      let authenticationRequest = XenditAuthenticationRequest.init(tokenId: tokenId, amount: amount, currency: currency, cardData: _cardHolder)
 
       if let _midLabel = midLabel {
         authenticationRequest.midLabel = _midLabel
@@ -107,10 +112,6 @@ class XenditPaymentClient: NSObject {
 
       if let _cardCvn = cardCvn {
         authenticationRequest.cardCvn = cardCvn
-      }
-
-      if let _cardHolder = cardHolder {
-        authenticationRequest.cardData = self.mapToCardHolder(cardHolderDict: _cardHolder)
       }
 
       let rootViewController = UIApplication.shared.delegate?.window??.rootViewController ?? UIViewController()
@@ -265,7 +266,7 @@ class XenditPaymentClient: NSObject {
       "requestPayload": authentication.requestPayload ?? NSNull(),
       "maskedCardNumber":authentication.maskedCardNumber ?? NSNull(),
       "threedsVersion": authentication.threedsVersion ?? NSNull(),
-      "failureReason":token.failureReason ?? NSNull(),
+      "failureReason":authentication.failureReason ?? NSNull(),
       "cardInfo":self.cardMetaDataToMap(cardMetaData: authentication.cardInfo) ?? NSNull()
     ]
   }

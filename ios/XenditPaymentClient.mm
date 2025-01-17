@@ -9,7 +9,7 @@ RCT_EXTERN_METHOD(multiply:(float)a withB:(float)b
 RCT_EXTERN_METHOD(initialize:(NSString *)publicKey)
 
 RCT_EXTERN_METHOD(createSingleUseToken:(NSDictionary *)cardDict 
-                  withAmount:(NSNumber *)amount
+                  withAmount:(nonnull NSNumber *)amount
                   shouldAuthenticate:(BOOL)shouldAuthenticate
                   withOnBehalfOf:(NSString *)onBehalfOf
                   withCurrency:(NSString *)currency
@@ -27,7 +27,7 @@ RCT_EXTERN_METHOD(createMultipleUseToken:(NSDictionary *)cardDict
                   withRejecter:(RCTPromiseRejectBlock)reject)
 
 RCT_EXTERN_METHOD(createAuthentication:(NSString *)tokenId 
-                  withAmount:(NSNumber *)amount
+                  withAmount:(nonnull NSNumber *)amount
                   withCurrency:(NSString *)currency
                   withCardCvn:(NSString *)cardCvn
                   withOnBehalfOf:(NSString *)onBehalfOf
